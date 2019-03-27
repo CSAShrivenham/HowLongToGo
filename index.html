@@ -64,59 +64,37 @@
 										<!-- <p>Just fill in the information below to find out.</p> -->
 									</header>
 									<body>
-										 <p>Name: <input type="text" style="text-align:center" name="fname"></p>
-										 <p>When did you start:</p> 
-										 <!-- <input type="date" style="text-align:center"/> -->
-										 <select style="overflow-y: scroll;">
-											<option value="date">1</option>
-											<option value="saab">2</option>
-											<option value="mercedes">3</option>
-											<option value="audi">4</option>
-											<option value="audi">5</option>
-											<option value="audi">6</option>
-											<option value="audi">7</option>
-											<option value="audi">8</option>
-											<option value="audi">9</option>
-											<option value="audi">10</option>
-											<option value="volvo">11</option>
-											<option value="saab">12</option>
-											<option value="mercedes">13</option>
-											<option value="audi">14</option>
-											<option value="audi">15</option>
-											<option value="audi">16</option>
-											<option value="audi">17</option>
-											<option value="audi">18</option>
-											<option value="audi">19</option>
-											<option value="audi">20</option>
-											<option value="volvo">21</option>
-											<option value="saab">22</option>
-											<option value="mercedes">23</option>
-											<option value="audi">24</option>
-											<option value="audi">25</option>
-											<option value="audi">26</option>
-											<option value="audi">27</option>
-											<option value="audi">28</option>
-											<option value="audi">29</option>
-											<option value="audi">30</option>
-											<option value="audi">31</option>
-										  </select>
+											<h3>Enter Your Name:</h3>
+											<input type="text" style="text-align:center" name="fname" placeholder="Enter Your Name">
+											<p></p>
 
-										 <select style="overflow-y: scroll;">
-											<option value="volvo">January</option>
-											<option value="saab">February</option>
-											<option value="mercedes">March</option>
-											<option value="audi">April</option>
-											<option value="audi">May</option>
-											<option value="audi">June</option>
-											<option value="audi">July</option>
-											<option value="audi">August</option>
-											<option value="audi">September</option>
-											<option value="audi">October</option>
-											<option value="audi">Novemeber</option>
-											<option value="audi">December</option>
-										  </select>
+											<h3>When did you start?</h3>
+											<select id="daySelect" style="display: inline-block; overflow-y: scroll; width: 30%; "></select>
+											<select id="monthSelect" style="display: inline-block; overflow-y: scroll; width: 30%; margin: 0"></select>
+											<select id="yearSelect" style="display: inline-block; overflow-y: scroll; width: 30%; margin: 0"></select>
+									
+											<p></p>
+												<!-- <select id="monthSelect" style="display: inline-block; overflow-y: scroll; width: 30%; margin: 0"></select> -->
+	
+												<!-- <select id="yearSelect" style="display: inline-block; overflow-y: scroll; width: 30%; margin: 0"></select> -->
+											<!-- </div> -->
 
-										  <select id="yearSelect" style="overflow-y: scroll;"></select>
+											<h3>PhD Registration Duration:</h3> 
+											<select id="phdLength" style="display: inline-block; overflow-y: scroll; width: 30%;">
+												<option>3</option>
+												<option>3.5</option>
+												<option>4</option>
+												<option>4.5</option>
+												<option>5</option>
+												<option>5.5</option>
+												<option>6</option>
+												<option>6.5</option>
+												<option>7</option>
+												<option>7.5</option>
+												<option>8</option>
+											</select>
+
+											
 									</body>
 									<!-- <footer class="major">
 										<ul class="actions special">
@@ -221,7 +199,7 @@
 								<li><a href="#" class="icon fa-dribbble alt"><span class="label">Dribbble</span></a></li>
 							</ul> -->
 						</section>
-						<p class="copyright">&copy; Brandon Corbett. Developed By: <a href="https://www.cranfield.ac.uk/people/brandon-corbett-15358933">Brandon Corbett</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+						<p class="copyright">&copy; Brandon Corbett 2019. Developed By: <a href="https://www.cranfield.ac.uk/people/brandon-corbett-15358933">Brandon Corbett</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
 					</footer>
 
 			</div>
@@ -236,23 +214,47 @@
 			<script src="assets/js/main.js"></script>
 
 			<script>
-				document.getElementById("demo").innerHTML = "Hello JavaScript!";
 				var newOption;
-				
+				var today = new Date();
+				var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+				var daySelect = document.getElementById("daySelect");
+				var monthSelect = document.getElementById("monthSelect");
+				var yearSelect = document.getElementById("yearSelect");
 
-				var select = document.getElementById("yearSelect");
-				for(i = 1900; i < 2020; i++)  {
-					//select.options[select.options.length] = new Option(index, index);
-					newOption = document.createElement("option"); 
-				newOption.value = i;  
-				newOption.text="h";
-					try { 
-						select.add(newOption); 
-						} 
-					catch (e) { 
-						select.appendChild(newOption);
-					}
-            
+				for(i = 1; i < 32; i++)  {
+				 	newOption = document.createElement("option"); 
+				 	newOption.value = i;  
+				 	newOption.text = i; 
+				 	try { 
+						daySelect.add(newOption); 
+					} 
+				 	catch (e) { 
+						daySelect.appendChild(newOption);
+				 	}           
+				}
+
+				for(i = 0; i < 12; i++)  {
+				 	newOption = document.createElement("option"); 
+				 	newOption.value = i;  
+				 	newOption.text = months[i]; 
+				 	try { 
+						monthSelect.add(newOption); 
+					} 
+				 	catch (e) { 
+						monthSelect.appendChild(newOption);
+				 	}           
+				}
+
+				for(i = today.getFullYear()+1; i >= today.getFullYear()-50; i--)  {
+				 	newOption = document.createElement("option"); 
+				 	newOption.value = i;  
+				 	newOption.text = i;
+				 	try { 
+						yearSelect.add(newOption); 
+					} 
+				 	catch (e) { 
+						yearSelect.appendChild(newOption);
+				 	}           
 				}
 			</script> 
 
