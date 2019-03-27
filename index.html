@@ -14,6 +14,8 @@
 	</head>
 	<body class="is-preload">
 
+			
+
 		<!-- Wrapper -->
 			<div id="wrapper">
 
@@ -22,6 +24,7 @@
 						<span class="logo"><img src="images/logo.svg" alt="" /></span>
 						<h1>How Long To Go?</h1>
 						<p>Something Ph.D students just need to know...</p>
+						
 						<!-- <br />built by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a>.</p> -->
 					</header>
 
@@ -45,7 +48,7 @@
 										<header class="major">
 											<h2>What is How Long To Go?</h2>
 										</header>
-										<p>This question is one PhD students asks themselves more often than they should do. This simple tool means you will never forget.</p>
+										<p>This question is one PhD students asks themselves more often than they should do. This simple tool means you will never forget.</p>										
 										<!-- <ul class="actions">
 											<li><a href="generic.html" class="button">Learn More</a></li>
 										</ul> -->
@@ -58,8 +61,63 @@
 							<section id="cta" class="main special">
 									<header class="major">
 										<h2>How Long Do I Have?</h2>
-										<p>Just fill in the information below to find out.</p>
+										<!-- <p>Just fill in the information below to find out.</p> -->
 									</header>
+									<body>
+										 <p>Name: <input type="text" style="text-align:center" name="fname"></p>
+										 <p>When did you start:</p> 
+										 <!-- <input type="date" style="text-align:center"/> -->
+										 <select style="overflow-y: scroll;">
+											<option value="volvo">1</option>
+											<option value="saab">2</option>
+											<option value="mercedes">3</option>
+											<option value="audi">4</option>
+											<option value="audi">5</option>
+											<option value="audi">6</option>
+											<option value="audi">7</option>
+											<option value="audi">8</option>
+											<option value="audi">9</option>
+											<option value="audi">10</option>
+											<option value="volvo">11</option>
+											<option value="saab">12</option>
+											<option value="mercedes">13</option>
+											<option value="audi">14</option>
+											<option value="audi">15</option>
+											<option value="audi">16</option>
+											<option value="audi">17</option>
+											<option value="audi">18</option>
+											<option value="audi">19</option>
+											<option value="audi">20</option>
+											<option value="volvo">21</option>
+											<option value="saab">22</option>
+											<option value="mercedes">23</option>
+											<option value="audi">24</option>
+											<option value="audi">25</option>
+											<option value="audi">26</option>
+											<option value="audi">27</option>
+											<option value="audi">28</option>
+											<option value="audi">29</option>
+											<option value="audi">30</option>
+											<option value="audi">31</option>
+										  </select>
+
+										 <select style="overflow-y: scroll;">
+											<option value="volvo">January</option>
+											<option value="saab">February</option>
+											<option value="mercedes">March</option>
+											<option value="audi">April</option>
+											<option value="audi">May</option>
+											<option value="audi">June</option>
+											<option value="audi">July</option>
+											<option value="audi">August</option>
+											<option value="audi">September</option>
+											<option value="audi">October</option>
+											<option value="audi">Novemeber</option>
+											<option value="audi">December</option>
+										  </select>
+
+										  <select id="yearSelect" style="overflow-y: scroll;"></select>
+									</body>
 									<!-- <footer class="major">
 										<ul class="actions special">
 											<li><a href="generic.html" class="button primary">Get Started</a></li>
@@ -176,6 +234,27 @@
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+
+			<script>
+				document.getElementById("demo").innerHTML = "Hello JavaScript!";
+				var newOption;
+				
+
+				var select = document.getElementById("yearSelect");
+				for(i = 1900; i < 2020; i++)  {
+					//select.options[select.options.length] = new Option(index, index);
+					newOption = document.createElement("option"); 
+				newOption.value = i;  
+				newOption.text="h";
+					try { 
+						select.add(newOption); 
+						} 
+					catch (e) { 
+						select.appendChild(newOption);
+					}
+            
+				}
+			</script> 
 
 	</body>
 </html>
