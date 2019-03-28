@@ -314,14 +314,14 @@
 
 			var diff = endDate - today;
 			var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-			var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-			var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+			//var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+			//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+			//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
 			document.getElementById("dayResult").innerText = 'Days: ' + days.toString();
-			document.getElementById("hourResult").innerText = 'Hours: ' + hours.toString();
-			document.getElementById("minResult").innerText = 'Minutes: ' + minutes.toString();
-			document.getElementById("secResult").innerText = 'Seconds: ' + seconds.toString();
+			//document.getElementById("hourResult").innerText = 'Hours: ' + hours.toString();
+			//document.getElementById("minResult").innerText = 'Minutes: ' + minutes.toString();
+			//document.getElementById("secResult").innerText = 'Seconds: ' + seconds.toString();
 		}
 	</script>
 
