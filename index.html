@@ -51,7 +51,7 @@
 										<header class="major">
 											<h2>What is How Long To Go?</h2>
 										</header>
-										<p>This question is one PhD students asks themselves more often than they should do. This simple tool means you will never forget.</p>										
+										<p>A question PhD students asks themselves more often than they should do. This simple tool means you will never forget.</p>										
 										<!-- <ul class="actions">
 											<li><a href="generic.html" class="button">Learn More</a></li>
 										</ul> -->
@@ -226,8 +226,6 @@
 				var ctx = document.getElementById('myChart').getContext('2d');
 				var piechart = new Chart(ctx);
 
-
-
 				var newOption;
 				var today = new Date();
 				var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -303,9 +301,6 @@
 
 				Days2Go();
 
-				
-			
-
 				function Days2Go()
 				{
 					var daySelect = document.getElementById("daySelect").value;
@@ -346,8 +341,6 @@
 					//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 					//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-					
-
 					if (daysCompleted < 0){
 						return;
 					}
@@ -356,14 +349,6 @@
 
 					document.getElementById("dayRemainResult").innerText = 'Days Remaining: ' + daysRemain.toString();
 					document.getElementById("dayCompletedResult").innerText = 'Days Completed: ' + daysCompleted.toString();
-
-					//drawChart();
-
-					//readTextFile("https://raw.githubusercontent.com/brandawg/HowLongToGo/master/data.txt");
-					//UpdateTextFile("https://raw.githubusercontent.com/brandawg/HowLongToGo/master/data.txt");
-					//document.getElementById("hourResult").innerText = allText.toString();
-					//document.getElementById("minResult").innerText = 'Minutes: ' + minutes.toString();
-					//document.getElementById("secResult").innerText = 'Seconds: ' + seconds.toString();
 				}
 
 				
@@ -375,60 +360,24 @@
 
 					piechart = new Chart(ctx, {
 					// The type of chart we want to create
-					type: 'doughnut',
+						type: 'doughnut',
 
-					// The data for our dataset
-					data: {
-						labels: ['Days Completed', 'Days to Go'],
-						datasets: [{
-							//label: 'My First dataset',
-							backgroundColor: ['rgb(34,180,115)','rgb(250, 0, 30)'],
-							//borderColor: 'rgb(255, 99, 132)',
-							data: [dayCompleted, dayRemain]
-						}]
-					},
+						// The data for our dataset
+						data: {
+							labels: ['Days Completed', 'Days to Go'],
+							datasets: [{
+								//label: 'My First dataset',
+								backgroundColor: ['rgb(34,180,115)','rgb(250, 0, 30)'],
+								//borderColor: 'rgb(255, 99, 132)',
+								data: [dayCompleted, dayRemain]
+							}]
+						},
 
-					// Configuration options go here
-					options: {}
-				});
+						// Configuration options go here
+						options: {}
+					});
 				}
-				
-
-
-				// function readTextFile(file)
-				// {
-				// 	//document.getElementById("hourResult").innerText = "Test";
-				// 	var rawFile = new XMLHttpRequest();
-				// 	rawFile.open("GET", file, false);
-				// 	rawFile.onreadystatechange = function ()
-				// 	{
-				// 		if(rawFile.readyState === 4)
-				// 		{
-				// 			if(rawFile.status === 200 || rawFile.status == 0)
-				// 			{
-				// 				var allText = rawFile.responseText;
-				// 				document.getElementById("hourResult").innerText = allText;
-				// 				//return allText;
-				// 				//alert(allText);
-				// 			}
-				// 		}
-				// 	}
-				// 	rawFile.send(null);
-				// }
-
-
-				// function UpdateTextFile(file)
-				// {
-				// 	var rawFile = new XMLHttpRequest();
-				// 	rawFile.open("POST", file);
-				// 	rawFile.send('HelloWorlds');
-				// }
-			</script>
-
-
-			<script type="text/javascript">
 
 			</script>
-
 	</body>
 </html>
