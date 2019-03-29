@@ -81,11 +81,17 @@
 											<!-- <input type="text" style="text-align:center" name="fname" placeholder="Enter Your Name"> -->
 											<p></p>
 
-											<canvas id="myChart">
-												
-											</canvas>
+											<a id="goButton" type="button" class="button primary">GO!</a>
+											
+											<p></p>
+
+											<canvas id="myChart"></canvas>
+
+											<p></p>
+
 											<h1 id="dayRemainResult"></h1>
 											<h1 id="dayCompletedResult"></h1>
+
 											<!-- <div id="piechart">
 												<h1 id="dayResult"></h1>
 											</div> -->
@@ -93,15 +99,14 @@
 									</body>
 
 
-									<footer class="major">
+									<!-- <footer class="major">
 										<ul class="actions special">
 											<li>
 												<a id="goButton" type="button" class="button primary">GO!</a>
 											</li>
 											
-											<!-- <li><a href="generic.html" class="button">Learn More</a></li> -->
 										</ul>
-									</footer>
+									</footer> -->
 								</section>
 
 						<!-- First Section -->
@@ -215,6 +220,14 @@
 
 			<script>
 				//Initialise Select Lists for Date Pickers
+				var goButtonButton = document.getElementById('goButton');
+				goButtonButton.onclick = Days2Go;
+
+				var ctx = document.getElementById('myChart').getContext('2d');
+				var piechart = new Chart(ctx);
+
+
+
 				var newOption;
 				var today = new Date();
 				var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -248,7 +261,7 @@
 				 	}           
 				}
 
-				for(i = today.getFullYear()+1; i >= today.getFullYear()-50; i--)  {
+				for(i = today.getFullYear(); i >= today.getFullYear()-25; i--)  {
 				 	newOption = document.createElement("option"); 
 				 	newOption.value = i;  
 				 	newOption.text = i;
@@ -285,12 +298,13 @@
 				}
 
 
-				
-			</script> 
+				daySelect.value = today.getDate();
+				monthSelect.value = today.getMonth();
 
-			<script>
-				var goButtonButton = document.getElementById('goButton');
-				goButtonButton.onclick = Days2Go;
+				Days2Go();
+
+				
+			
 
 				function Days2Go()
 				{
@@ -305,22 +319,23 @@
 					{
 						var y = Number(years) - 0.5;
 						var endYear = Number(yearSelect) + y;
+
 						//Add 6 months extra
-						var endMonth = Number(monthSelect) + 1 + 6;
+						var endMonth = Number(monthSelect) + 5;
 						if (endMonth > 12)
 						{
-							var endMonth = endMonth - 12 - 2;
+							var endMonth = endMonth - 12 - 1;
 							var endYear = endYear + 1;
 						}
 					}
 					else
 					{
 						var endYear = Number(yearSelect) + Number(years);
-						var endMonth = Number(monthSelect) + 1;
+						var endMonth = Number(monthSelect);
 					}
 
-					var startDate = new Date(Number(yearSelect), Number(monthSelect)+1, Number(daySelect)).getTime();
-					var endDate = new Date(endYear, endMonth, endDay).getTime();
+					var startDate = new Date(Number(yearSelect), Number(monthSelect), Number(daySelect));
+					var endDate = new Date(endYear, endMonth, endDay);
 					var todayDate = new Date().getTime();
 
 					var diffCompleted = today - startDate;
@@ -331,14 +346,17 @@
 					//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 					//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-					//if (daysCompleted < 0){
-					//	return;
-					//}
+					
+
+					if (daysCompleted < 0){
+						return;
+					}
+
+					UpdateChart(daysCompleted, daysRemain);
 
 					document.getElementById("dayRemainResult").innerText = 'Days Remaining: ' + daysRemain.toString();
 					document.getElementById("dayCompletedResult").innerText = 'Days Completed: ' + daysCompleted.toString();
 
-					UpdateChart(daysCompleted, daysRemain);
 					//drawChart();
 
 					//readTextFile("https://raw.githubusercontent.com/brandawg/HowLongToGo/master/data.txt");
@@ -347,6 +365,34 @@
 					//document.getElementById("minResult").innerText = 'Minutes: ' + minutes.toString();
 					//document.getElementById("secResult").innerText = 'Seconds: ' + seconds.toString();
 				}
+
+				
+				function UpdateChart(dayCompleted, dayRemain){
+
+					piechart.destroy();
+
+					var ctx = document.getElementById('myChart').getContext('2d');
+
+					piechart = new Chart(ctx, {
+					// The type of chart we want to create
+					type: 'doughnut',
+
+					// The data for our dataset
+					data: {
+						labels: ['Days Completed', 'Days to Go'],
+						datasets: [{
+							//label: 'My First dataset',
+							backgroundColor: ['rgb(34,180,115)','rgb(250, 0, 30)'],
+							//borderColor: 'rgb(255, 99, 132)',
+							data: [dayCompleted, dayRemain]
+						}]
+					},
+
+					// Configuration options go here
+					options: {}
+				});
+				}
+				
 
 
 				// function readTextFile(file)
@@ -381,56 +427,7 @@
 
 
 			<script type="text/javascript">
-				// Load google charts
-				//google.charts.load('current', {'packages':['corechart']});
-				//google.charts.setOnLoadCallback(drawChart);
-				
-				// Draw the chart and set the chart values
-				// function drawChart() {
-				// 	var data = google.visualization.arrayToDataTable([
-				// 	['Task', 'Hours per Day'],
-				// 	['Work', 8],
-				// 	['Eat', 2],
-				// 	['TV', 4],
-				// 	['Gym', 2],
-				// 	['Sleep', 8]
-				// 	]);
-					
-				// 	// Optional; add a title and set the width and height of the chart
-				// 	var options = {
-				// 		'title':'My Average Day',
-				// 		'width':550,
-				// 		'height':400,
-				// 		pieHole: 0.4
-				// 	};
-					
-				// 	// Display the chart inside the <div> element with id="piechart"
-				// 	var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-				// 	chart.draw(data, options);
-				// }
 
-				function UpdateChart(dayCompleted, dayRemain){
-
-					var ctx = document.getElementById('myChart').getContext('2d');
-					var chart = new Chart(ctx, {
-					// The type of chart we want to create
-					type: 'doughnut',
-
-					// The data for our dataset
-					data: {
-						labels: ['Days Completed', 'Days to Go'],
-						datasets: [{
-							//label: 'My First dataset',
-							backgroundColor: ['rgb(34,180,115)','rgb(255, 99, 132)'],
-							//borderColor: 'rgb(255, 99, 132)',
-							data: [dayCompleted, dayRemain]
-						}]
-					},
-
-					// Configuration options go here
-					options: {}
-				});
-			}
 			</script>
 
 	</body>
