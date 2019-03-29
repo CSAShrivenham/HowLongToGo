@@ -276,54 +276,82 @@
 						}    
 					}       
 				}
+
+
+				
 			</script> 
 
-<script>
-		var goButtonButton = document.getElementById('goButton');
-		goButtonButton.onclick = Days2Go;
+			<script>
+				var goButtonButton = document.getElementById('goButton');
+				goButtonButton.onclick = Days2Go;
 
-		function Days2Go()
-		{
-			var daySelect = document.getElementById("daySelect").value;
-			var monthSelect = document.getElementById("monthSelect").value;
-			var yearSelect = document.getElementById("yearSelect").value;
-			var years = document.getElementById("phdLengthSelect").value;
-
-			//var startDate = new Date(yearSelect, monthSelect, daySelect);
-			var endDay = Number(daySelect);
-			if (Number(years) % 1 == 0.5)
-			{
-				var y = Number(years) - 0.5;
-				var endYear = Number(yearSelect) + y;
-				//Add 6 months extra
-				var endMonth = Number(monthSelect) + 1 + 6;
-				if (endMonth > 12)
+				function Days2Go()
 				{
-					var endMonth = endMonth - 12 - 2;
-					var endYear = endYear + 1;
+					var daySelect = document.getElementById("daySelect").value;
+					var monthSelect = document.getElementById("monthSelect").value;
+					var yearSelect = document.getElementById("yearSelect").value;
+					var years = document.getElementById("phdLengthSelect").value;
+
+					//var startDate = new Date(yearSelect, monthSelect, daySelect);
+					var endDay = Number(daySelect);
+					if (Number(years) % 1 == 0.5)
+					{
+						var y = Number(years) - 0.5;
+						var endYear = Number(yearSelect) + y;
+						//Add 6 months extra
+						var endMonth = Number(monthSelect) + 1 + 6;
+						if (endMonth > 12)
+						{
+							var endMonth = endMonth - 12 - 2;
+							var endYear = endYear + 1;
+						}
+					}
+					else
+					{
+						var endYear = Number(yearSelect) + Number(years);
+						var endMonth = Number(monthSelect) + 1;
+					}
+
+					var endDate = new Date(endYear, endMonth, endDay).getTime();
+					var todayDate = new Date().getTime();
+
+					var diff = endDate - today;
+					var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+					//var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+					//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+					document.getElementById("dayResult").innerText = 'Days: ' + days.toString();
+
+					//readTextFile("file:///E:/Github/HowLongToGo/data.txt");
+
+					//document.getElementById("hourResult").innerText = allText.toString();
+					//document.getElementById("minResult").innerText = 'Minutes: ' + minutes.toString();
+					//document.getElementById("secResult").innerText = 'Seconds: ' + seconds.toString();
 				}
-			}
-			else
-			{
-				var endYear = Number(yearSelect) + Number(years);
-				var endMonth = Number(monthSelect) + 1;
-			}
 
-			var endDate = new Date(endYear, endMonth, endDay).getTime();
-			var todayDate = new Date().getTime();
 
-			var diff = endDate - today;
-			var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-			//var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-			//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-			//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-			document.getElementById("dayResult").innerText = 'Days: ' + days.toString();
-			//document.getElementById("hourResult").innerText = 'Hours: ' + hours.toString();
-			//document.getElementById("minResult").innerText = 'Minutes: ' + minutes.toString();
-			//document.getElementById("secResult").innerText = 'Seconds: ' + seconds.toString();
-		}
-	</script>
+				function readTextFile(file)
+				{
+					//document.getElementById("hourResult").innerText = "Test";
+					var rawFile = new XMLHttpRequest();
+					rawFile.open("GET", file, false);
+					rawFile.onreadystatechange = function ()
+					{
+						if(rawFile.readyState === 4)
+						{
+							if(rawFile.status === 200 || rawFile.status == 0)
+							{
+								var allText = rawFile.responseText;
+								//document.getElementById("hourResult").innerText = allText;
+								//return allText;
+								alert(allText);
+							}
+						}
+					}
+					rawFile.send(null);
+				}
+			</script>
 
 	</body>
 </html>
