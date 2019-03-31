@@ -511,7 +511,7 @@
 						return -1;
 					}
 
-					var s = Math.ceil(arr.length / 2);
+					var s = Math.ceil((arr.length - survivorData.length) / 2);
 
 					var max = Array(s);
 					var maxIndex = Array(s);
@@ -564,7 +564,7 @@
 
 					// var min = [1000000,1000000,1000000,1000000,1000000];
 					// var minIndex = [-1,-1,-1,-1,-1];
-					var s = Math.ceil(arr.length / 2);
+					var s = Math.ceil((arr.length - survivorData.length) / 2);
 					var min = Array(s);
 					var minIndex = Array(s);
 					for (var i = 0; i < s; i++) {
