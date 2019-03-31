@@ -92,6 +92,8 @@
 											<h1 id="dayRemainResult"></h1>
 											<h1 id="dayCompletedResult"></h1>
 
+											<a id="addLeaderButton" type="button" class="button primary">Add To Leaderboard?</a>
+
 											<!-- <div id="piechart">
 												<h1 id="dayResult"></h1>
 											</div> -->
@@ -110,33 +112,83 @@
 								</section>
 
 						<!-- First Section -->
-							<!-- <section id="lead" class="main special">
+						<section id="lead" class="main special">
 								<header class="major">
 									<h2>Leaderboards</h2>
 								</header>
 								<ul class="features">
 									<li>
-										<span class="icon major style1 fa-code"></span>
-										<h3>Finishing</h3>
-										<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
+										<!-- <span class="icon major style1 fa-code"></span> -->
+										<h1>Oldest</h1>
+										<!-- <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p> -->
+										<table id='mytable'>
+											<thead>
+												<tr>
+													<td>Name</td><td>Days Remaining</td>
+												</tr>
+											</thead>
+											<tbody>
+												<!-- <tr>
+													<td>22</td><td>333</td>
+												</tr>
+												<tr>
+													<td>22</td><td>333</td>
+												</tr> -->
+											</tbody>
+										</table>
 									</li>
 									<li>
-										<span class="icon major style3 fa-copy"></span>
-										<h3>Starting</h3>
-										<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
+										<!-- <span class="icon major style3 fa-copy"></span> -->
+										<h1>Newest</h1>
+										<!-- <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p> -->
+										<table id='mytable'>
+												<thead>
+													<tr>
+														<td>Name</td><td>Days Remaining</td>
+													</tr>
+												</thead>
+												<tbody>
+													<!-- <tr>
+														<td>22</td><td>333</td>
+													</tr>
+													<tr>
+														<td>22</td><td>333</td>
+													</tr> -->
+												</tbody>
+											</table>
 									</li>
 									<li>
+											<!-- <span class="icon major style3 fa-copy"></span> -->
+											<h1>Survivors</h1>
+											<!-- <p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p> -->
+											<table id='mytable'>
+													<thead>
+														<tr>
+															<td>Name</td>
+														</tr>
+													</thead>
+													<tbody>
+														<!-- <tr>
+															<td>22</td><td>333</td>
+														</tr>
+														<tr>
+															<td>22</td><td>333</td>
+														</tr> -->
+													</tbody>
+												</table>
+										</li>
+									<!-- <li>
 										<span class="icon major style5 fa-diamond"></span>
 										<h3>Dolor nullam</h3>
 										<p>Sed lorem amet ipsum dolor et amet nullam consequat a feugiat consequat tempus veroeros sed consequat.</p>
-									</li>
+									</li> -->
 								</ul>
-								<footer class="major">
+								<!-- <footer class="major">
 									<ul class="actions special">
 										<li><a href="generic.html" class="button">Learn More</a></li>
 									</ul>
-								</footer>
-							</section> -->
+								</footer> -->
+							</section>
 
 						<!-- Second Section -->
 							<!-- <section id="second" class="main special">
@@ -220,8 +272,11 @@
 
 			<script>
 				//Initialise Select Lists for Date Pickers
+				var GoHasBeenRun = 0;
+				var addLeaderButton = document.getElementById('addLeaderButton');
 				var goButtonButton = document.getElementById('goButton');
 				goButtonButton.onclick = Days2Go;
+				addLeaderButton.onclick = Add2Leaderboard;
 
 				var ctx = document.getElementById('myChart').getContext('2d');
 				var piechart = new Chart(ctx);
@@ -301,6 +356,336 @@
 
 				Days2Go();
 
+				// Load LeaderBoards
+				
+				var leaderboardData = [];
+				var finishData = [];
+				var startingData = [];
+				var dayData = [];
+				var survivorData = [];
+				// $(document).ready(function() {
+				// 	$.ajax({
+				// 		type: "GET",
+				// 		url: "data.txt",
+				// 		dataType: "text",
+				// 		success: function(data) { processData(data); }
+				// 	});
+				// });
+
+				processData();
+
+				//console.log(leaderboardData);
+				
+
+				// Populate Leaderboard
+				for (var i = 0; i < leaderboardData.length; i++) {
+					var item = leaderboardData[i];
+					var name = item[0];
+					var sDateArr = item[1].split('/');
+					var sDate = new Date(sDateArr[2],sDateArr[1]-1,sDateArr[0]);
+					var years = item[2];
+				    //console.log(sDate);
+					var days = Days2GoCalculation(sDate.getDate(),sDate.getMonth(),sDate.getFullYear(),years);
+
+					if (days < 0){
+						survivorData.push(i);
+						//console.log(i);
+					}
+					//else{
+						//dayData.push(days);
+					//}
+					dayData.push(days);
+				}
+
+				console.log(survivorData);
+				console.log(dayData);
+
+				var lowValues =  indexOfMin(dayData);
+				var topValues =  indexOfMax(dayData);
+
+				for (var i = 0; i < lowValues.length; i++) {
+					var item = leaderboardData[lowValues[i]];
+					var name = item[0];
+
+					addRow(name,dayData[lowValues[i]],0);
+				}
+
+				for (var i = 0; i < topValues.length; i++) {
+					var item = leaderboardData[topValues[i]];
+					var name = item[0];
+
+					addRow(name,dayData[topValues[i]],1);
+				}
+
+				for (var i = 0; i < survivorData.length; i++) {
+					var item = leaderboardData[survivorData[i]];
+					var name = item[0];
+
+					addRow('Dr. ' + name,'',2);
+				}
+				
+				//console.log(lowValues);
+
+				//var topValues = indexOfMax(dayData);
+				//console.log(topValues);
+
+
+
+				//addRow('Hello','30303',0)
+
+				// Functions
+				function Add2Leaderboard(){
+					console.log(GoHasBeenRun);
+					if (GoHasBeenRun <= 1){
+						alert('Hit Go! before you can add your result to the leaderboard.');
+						return;
+					}
+
+
+					var daySelect = document.getElementById("daySelect").value;
+					var monthSelect = document.getElementById("monthSelect").value;
+					var yearSelect = document.getElementById("yearSelect").value;
+					var years = document.getElementById("phdLengthSelect").value;
+
+					//var startDate = new Date(yearSelect, monthSelect, daySelect);
+					var endDay = Number(daySelect);
+					if (Number(years) % 1 == 0.5)
+					{
+						var y = Number(years) - 0.5;
+						var endYear = Number(yearSelect) + y;
+
+						//Add 6 months extra
+						var endMonth = Number(monthSelect) + 5;
+						if (endMonth > 12)
+						{
+							var endMonth = endMonth - 12 - 1;
+							var endYear = endYear + 1;
+						}
+					}
+					else
+					{
+						var endYear = Number(yearSelect) + Number(years);
+						var endMonth = Number(monthSelect);
+					}
+
+					var startDate = new Date(Number(yearSelect), Number(monthSelect), Number(daySelect));
+
+					var body = 'Name: Please Enter Your Name Here' + '%0D%0A' +  'Start Date: ' + startDate.toDateString() + '%0D%0A' + 'Years: ' + years.toString();
+					window.open('mailto:b.corbett@cranfield.ac.uk?subject=Please add me to the leaderboard!&body='+body,'_self');
+
+				}
+
+				function processData() {
+					var rawFile = new XMLHttpRequest();
+					rawFile.open("GET", "data.txt", false);
+					rawFile.onreadystatechange = function ()
+					{
+						if(rawFile.readyState === 4)
+						{
+							if(rawFile.status === 200 || rawFile.status == 0)
+							{
+								var allText = rawFile.responseText;
+
+								var allTextLines = allText.split(/\r\n|\n/);
+
+									for (var i = 0; i < allTextLines.length; i++) {
+										var data = allTextLines[i].split(',');
+										leaderboardData.push(data);
+									}
+								//alert(allText);
+							}
+						}
+					}
+					rawFile.send(null);
+				}
+
+				function getMin(data) {
+					return data.reduce((min, p) => p < min ? p : min);
+				}
+				function getMax(data) {
+					return data.reduce((max, p) => p > max ? p : max);
+				}
+
+				function indexOfMax(arr) {
+					if (arr.length === 0) {
+						return -1;
+					}
+
+					var s = Math.ceil(arr.length / 2);
+
+					var max = Array(s);
+					var maxIndex = Array(s);
+					for (var i = 0; i < s; i++) {
+						max[i] = -1;
+						maxIndex[i] = -1;
+					}
+
+					for (var i = 0; i < arr.length; i++) {
+						if (arr[i] < 0){
+							continue;
+						}
+
+						for (var j = 0; j < max.length; j++) {
+							if (arr[i] > max[j]) {
+								//Shift current array items
+								if (max[j] == -1)
+								{
+									max[j] = arr[i];
+									maxIndex[j] = i;
+								}
+								else if (j < max.length){
+									for (var n = max.length-2; n >= j; --n){
+
+										max[n+1] = max[n];
+										maxIndex[n+1] = maxIndex[n];
+									}
+									max[j] = arr[i];
+									maxIndex[j] = i;
+								}
+								else{
+									max[j] = arr[i];
+									maxIndex[j] = i;
+								}
+								break;
+							}
+						}
+					}
+
+					console.log(max);
+					console.log(maxIndex);
+					return maxIndex;
+				}
+
+
+				function indexOfMin(arr) {
+					if (arr.length === 0) {
+						return -1;
+					}
+
+					// var min = [1000000,1000000,1000000,1000000,1000000];
+					// var minIndex = [-1,-1,-1,-1,-1];
+					var s = Math.ceil(arr.length / 2);
+					var min = Array(s);
+					var minIndex = Array(s);
+					for (var i = 0; i < s; i++) {
+						min[i] = 10000;
+						minIndex[i] = -1;
+					}
+
+					for (var i = 0; i < arr.length; i++) {
+						if (arr[i] < 0){
+							continue;
+						}
+						for (var j = 0; j < min.length; j++) {
+							if (arr[i] < min[j]) {
+								//Shift current array items
+								if (min[j] == -1)
+								{
+									min[j] = arr[i];
+									minIndex[j] = i;
+								}
+								else if (j < min.length){
+									for (var n = min.length-2; n >= j; --n){
+
+										min[n+1] = min[n];
+										minIndex[n+1] = minIndex[n];
+									}
+									min[j] = arr[i];
+									minIndex[j] = i;
+								}
+								else{
+									min[j] = arr[i];
+									minIndex[j] = i;
+								}
+								break;
+							}
+						}
+					}
+
+					console.log(min);
+					console.log(minIndex);
+					return minIndex;
+				}
+
+
+				function addRow(content,morecontent,table)
+				{
+					if (!document.getElementsByTagName) return;
+					tabBody=document.getElementsByTagName("tbody").item(table);
+					row=document.createElement("tr");
+					if (table < 2){
+						cell1 = document.createElement("td");
+						cell2 = document.createElement("td");
+						textnode1=document.createTextNode(content);
+						textnode2=document.createTextNode(morecontent);
+						cell1.appendChild(textnode1);
+						cell2.appendChild(textnode2);
+						row.appendChild(cell1);
+						row.appendChild(cell2);
+						tabBody.appendChild(row);
+					}else{
+						cell1 = document.createElement("td");
+						textnode1=document.createTextNode(content);
+						cell1.appendChild(textnode1);
+						row.appendChild(cell1);
+						tabBody.appendChild(row);
+					}
+				}
+
+				function Days2GoCalculation(daySelect,monthSelect,yearSelect,years)
+				{
+					//var daySelect = document.getElementById("daySelect").value;
+					//var monthSelect = document.getElementById("monthSelect").value;
+					//var yearSelect = document.getElementById("yearSelect").value;
+					//var years = document.getElementById("phdLengthSelect").value;
+
+					//var startDate = new Date(yearSelect, monthSelect, daySelect);
+					var endDay = Number(daySelect);
+					if (Number(years) % 1 == 0.5)
+					{
+						var y = Number(years) - 0.5;
+						var endYear = Number(yearSelect) + y;
+
+						//Add 6 months extra
+						var endMonth = Number(monthSelect) + 5;
+						if (endMonth > 12)
+						{
+							var endMonth = endMonth - 12 - 1;
+							var endYear = endYear + 1;
+						}
+					}
+					else
+					{
+						var endYear = Number(yearSelect) + Number(years);
+						var endMonth = Number(monthSelect);
+					}
+
+					var startDate = new Date(Number(yearSelect), Number(monthSelect), Number(daySelect));
+					var endDate = new Date(endYear, endMonth, endDay);
+					var todayDate = new Date().getTime();
+
+					var diffCompleted = today - startDate;
+					var diffRemain = endDate - today;
+					var daysRemain = Math.floor(diffRemain / (1000 * 60 * 60 * 24));
+					var daysCompleted = Math.floor(diffCompleted / (1000 * 60 * 60 * 24));
+					//var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+					//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+					//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+					if (daysCompleted < 0){
+						return ;
+					}
+
+					return daysRemain;
+
+					//UpdateChart(daysCompleted, daysRemain);
+
+					//document.getElementById("dayRemainResult").innerText = 'Days Remaining: ' + daysRemain.toString();
+					//document.getElementById("dayCompletedResult").innerText = 'Days Completed: ' + daysCompleted.toString();
+				}
+
+
+
 				function Days2Go()
 				{
 					var daySelect = document.getElementById("daySelect").value;
@@ -349,6 +734,8 @@
 
 					document.getElementById("dayRemainResult").innerText = 'Days Remaining: ' + daysRemain.toString();
 					document.getElementById("dayCompletedResult").innerText = 'Days Completed: ' + daysCompleted.toString();
+
+					GoHasBeenRun = GoHasBeenRun+1;
 				}
 
 				
