@@ -563,6 +563,9 @@
 					// var min = [1000000,1000000,1000000,1000000,1000000];
 					// var minIndex = [-1,-1,-1,-1,-1];
 					var s = Math.ceil((arr.length - survivorData.length) / 2);
+					if (isOdd(arr.length - survivorData.length) == 1){
+						s = s - 1;
+					}
 					var min = Array(s);
 					var minIndex = Array(s);
 					for (var i = 0; i < s; i++) {
@@ -605,6 +608,7 @@
 					return minIndex;
 				}
 
+				function isOdd(num) { return num % 2;}
 
 				function addRow(content,morecontent,table)
 				{
