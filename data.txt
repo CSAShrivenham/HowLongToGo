@@ -2,7 +2,6 @@ Brandon Corbett, 3/10/2016, 3.5
 Emily Arnold, 3/03/2017, 3.5
 James Elgy, 3/10/2016, 3
 Akhil Kallepalli, 1/06/2015, 4.5
-Sebastian Wirth, 31/10/2015, 4
 Constantinos Franceskides, 1/01/2010, 3
 Alexander Edward-Smith, 1/01/2010, 3
 Tobias Shanker, 1/01/2010, 3
