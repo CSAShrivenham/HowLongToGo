@@ -1,10 +1,10 @@
-Brandon Corbett, 3/10/2016, 3.5
-Emily Arnold, 20/02/2017, 3.5
-James Elgy, 3/10/2016, 3
-Akhil Kallepalli, 1/06/2015, 4.5
-Constantinos Franceskides, 1/01/2010, 3
-Alexander Edward-Smith, 1/01/2010, 3
-Tobias Shanker, 1/01/2010, 3
-Amélie Grenier, 20/02/2017, 3.5
-Sarah Gosling, 3/09/2018, 3
-Sammie Davies, 1/10/2018, 3
+Brandon Corbett, 3/10/2016, 3, 6
+Emily Arnold, 20/02/2017, 3, 6
+James Elgy, 3/10/2016, 3, 0
+Akhil Kallepalli, 1/06/2015, 4, 6
+Constantinos Franceskides, 1/01/2010, 3, 0
+Alexander Edward-Smith, 1/01/2010, 3, 0
+Tobias Shanker, 1/01/2010, 3, 0
+Amélie Grenier, 20/02/2017, 3, 6
+Sarah Gosling, 3/09/2018, 3, 0
+Sammie Davies, 1/10/2018, 3, 0

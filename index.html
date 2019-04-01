@@ -72,8 +72,9 @@
 									
 											<p></p>
 
-											<h3>PhD Duration (Years):</h3> 
-											<select id="phdLengthSelect" style="display: inline-block; overflow-y: scroll; width: 30%;"></select>
+											<h3>PhD Duration:</h3> 
+											<select id="phdLengthYearSelect" style="display: inline-block; overflow-y: scroll; width: 30%;"></select>
+											<select id="phdLengthMonthSelect" style="display: inline-block; overflow-y: scroll; width: 30%;"></select>
 
 											<!-- <h3>Enter Your Name:</h3> -->
 											<!-- <input type="text" style="text-align:center" name="fname" placeholder="Enter Your Name"> -->
@@ -286,7 +287,8 @@
 				var daySelect = document.getElementById("daySelect");
 				var monthSelect = document.getElementById("monthSelect");
 				var yearSelect = document.getElementById("yearSelect");
-				var phdLengthSelect = document.getElementById("phdLengthSelect");
+				var phdLengthYearSelect = document.getElementById("phdLengthYearSelect");
+				var phdLengthMonthSelect = document.getElementById("phdLengthMonthSelect");
 
 				for(i = 1; i < 32; i++)  {
 				 	newOption = document.createElement("option"); 
@@ -327,27 +329,49 @@
 				for(i = 3; i <= 8; i++) {
 				 	newOption = document.createElement("option"); 
 				 	newOption.value = i;  
-				 	newOption.text = i; 
+
+					newOption.text = i + ' Years'; 
+				 	
 				 	try { 
-						phdLengthSelect.add(newOption); 
+						phdLengthYearSelect.add(newOption); 
 					} 
 				 	catch (e) { 
-						phdLengthSelect.appendChild(newOption);
+						phdLengthYearSelect.appendChild(newOption);
 				 	}  
 					 
-					if (i < 8) {
-						newOption = document.createElement("option"); 
-						newOption.value = i + 0.5;  
-						newOption.text = i + 0.5; 
-						try { 
-							phdLengthSelect.add(newOption); 
-						} 
-						catch (e) { 
-							phdLengthSelect.appendChild(newOption);
-						}    
-					}       
+					// if (i < 8) {
+					// 	newOption = document.createElement("option"); 
+					// 	newOption.value = i + 0.5;  
+					// 	newOption.text = i + 0.5; 
+					// 	try { 
+					// 		phdLengthYearSelect.add(newOption); 
+					// 	} 
+					// 	catch (e) { 
+					// 		phdLengthYearSelect.appendChild(newOption);
+					// 	}    
+					// }       
 				}
 
+				for(i = 0; i <= 11; i++) {
+				 	newOption = document.createElement("option"); 
+				 	newOption.value = i;  
+					 if (i == 0) {
+						newOption.text = 'None'; 
+					 }
+					 else if (i == 1){
+						newOption.text = i + ' Month'; 
+					 }
+					 else{
+						newOption.text = i + ' Months'; 
+					 }
+				 	
+				 	try { 
+						phdLengthMonthSelect.add(newOption); 
+					} 
+				 	catch (e) { 
+						phdLengthMonthSelect.appendChild(newOption);
+				 	}    
+				}
 
 				daySelect.value = today.getDate();
 				monthSelect.value = today.getMonth();
@@ -382,8 +406,9 @@
 					var sDateArr = item[1].split('/');
 					var sDate = new Date(sDateArr[2],sDateArr[1]-1,sDateArr[0]);
 					var years = item[2];
+					var months = item[3];
 				    //console.log(sDate);
-					var days = Days2GoCalculation(sDate.getDate(),sDate.getMonth(),sDate.getFullYear(),years);
+					var days = Days2GoCalculation(sDate.getDate(),sDate.getMonth(),sDate.getFullYear(),years,months);
 
 					if (days < 0){
 						survivorData.push(i);
@@ -439,36 +464,30 @@
 						return;
 					}
 
-
 					var daySelect = document.getElementById("daySelect").value;
 					var monthSelect = document.getElementById("monthSelect").value;
 					var yearSelect = document.getElementById("yearSelect").value;
-					var years = document.getElementById("phdLengthSelect").value;
+					var years = document.getElementById("phdLengthYearSelect").value;
+					var months = document.getElementById("phdLengthMonthSelect").value;
 
 					//var startDate = new Date(yearSelect, monthSelect, daySelect);
-					var endDay = Number(daySelect);
-					if (Number(years) % 1 == 0.5)
-					{
-						var y = Number(years) - 0.5;
-						var endYear = Number(yearSelect) + y;
+					var startDay = Number(daySelect);
+					var startMonth = Number(monthSelect);
+					var startYear = Number(yearSelect);
 
-						//Add 6 months extra
-						var endMonth = Number(monthSelect) + 5;
-						if (endMonth > 12)
-						{
-							var endMonth = endMonth - 12 - 1;
-							var endYear = endYear + 1;
-						}
-					}
-					else
-					{
-						var endYear = Number(yearSelect) + Number(years);
-						var endMonth = Number(monthSelect);
+					var endDay = startDay;
+					var endYear = startYear + Number(years);
+					var endMonth = startMonth + Number(months);
+
+					if (endMonth > 12){
+						var endMonth = endMonth - 12 - 1;
+						var endYear = endYear + 1;
 					}
 
-					var startDate = new Date(Number(yearSelect), Number(monthSelect), Number(daySelect));
+					var startDate = new Date(startYear, startMonth, startDay);
+					var endDate = new Date(endYear, endMonth, endDay);
 
-					var body = 'Name: Please Enter Your Name Here' + '%0D%0A' +  'Start Date: ' + startDate.toDateString() + '%0D%0A' + 'Years: ' + years.toString() + '%0D%0A %0D%0A' + 'In doing this you are willing giving consent for your Name to be used publicly on the website https://brandawg.github.io/HowLongToGo/';
+					var body = 'Name: Please Enter Your Name Here' + '%0D%0A' +  'Start Date: ' + startDate.toDateString() + '%0D%0A' + 'Years: ' + years.toString() + '%0D%0A' + 'Months: ' + months.toString() + '%0D%0A %0D%0A' + 'In doing this you are willing giving consent for your Name to be used publicly on the website https://brandawg.github.io/HowLongToGo/';
 					window.open('mailto:b.corbett@cranfield.ac.uk?subject=Please add me to the leaderboard!&body='+body,'_self');
 
 				}
@@ -634,7 +653,7 @@
 					}
 				}
 
-				function Days2GoCalculation(daySelect,monthSelect,yearSelect,years)
+				function Days2GoCalculation(daySelect,monthSelect,yearSelect,years,months)
 				{
 					//var daySelect = document.getElementById("daySelect").value;
 					//var monthSelect = document.getElementById("monthSelect").value;
@@ -642,27 +661,40 @@
 					//var years = document.getElementById("phdLengthSelect").value;
 
 					//var startDate = new Date(yearSelect, monthSelect, daySelect);
-					var endDay = Number(daySelect);
-					if (Number(years) % 1 == 0.5)
-					{
-						var y = Number(years) - 0.5;
-						var endYear = Number(yearSelect) + y;
+					// var endDay = Number(daySelect);
+					// if (Number(years) % 1 == 0.5)
+					// {
+					// 	var y = Number(years) - 0.5;
+					// 	var endYear = Number(yearSelect) + y;
 
-						//Add 6 months extra
-						var endMonth = Number(monthSelect) + 5;
-						if (endMonth > 12)
-						{
-							var endMonth = endMonth - 12 - 1;
-							var endYear = endYear + 1;
-						}
-					}
-					else
-					{
-						var endYear = Number(yearSelect) + Number(years);
-						var endMonth = Number(monthSelect);
+					// 	//Add 6 months extra
+					// 	var endMonth = Number(monthSelect) + 5;
+					// 	if (endMonth > 12)
+					// 	{
+					// 		var endMonth = endMonth - 12 - 1;
+					// 		var endYear = endYear + 1;
+					// 	}
+					// }
+					// else
+					// {
+					// 	var endYear = Number(yearSelect) + Number(years);
+					// 	var endMonth = Number(monthSelect);
+					// }
+
+					var startDay = Number(daySelect);
+					var startMonth = Number(monthSelect);
+					var startYear = Number(yearSelect);
+
+					var endDay = startDay;
+					var endYear = startYear + Number(years);
+					var endMonth = startMonth + Number(months);
+
+					if (endMonth > 12){
+						var endMonth = endMonth - 12 - 1;
+						var endYear = endYear + 1;
 					}
 
-					var startDate = new Date(Number(yearSelect), Number(monthSelect), Number(daySelect));
+					var startDate = new Date(startYear, startMonth, startDay);
 					var endDate = new Date(endYear, endMonth, endDay);
 					var todayDate = new Date().getTime();
 
@@ -693,37 +725,54 @@
 					var daySelect = document.getElementById("daySelect").value;
 					var monthSelect = document.getElementById("monthSelect").value;
 					var yearSelect = document.getElementById("yearSelect").value;
-					var years = document.getElementById("phdLengthSelect").value;
+
+					var years = document.getElementById("phdLengthYearSelect").value;
+					var months = document.getElementById("phdLengthMonthSelect").value;
 
 					//var startDate = new Date(yearSelect, monthSelect, daySelect);
-					var endDay = Number(daySelect);
-					if (Number(years) % 1 == 0.5)
-					{
-						var y = Number(years) - 0.5;
-						var endYear = Number(yearSelect) + y;
+					
+					var startDay = Number(daySelect);
+					var startMonth = Number(monthSelect);
+					var startYear = Number(yearSelect);
 
-						//Add 6 months extra
-						var endMonth = Number(monthSelect) + 5;
-						if (endMonth > 12)
-						{
-							var endMonth = endMonth - 12 - 1;
-							var endYear = endYear + 1;
-						}
-					}
-					else
-					{
-						var endYear = Number(yearSelect) + Number(years);
-						var endMonth = Number(monthSelect);
+					var endDay = startDay;
+					var endYear = startYear + Number(years);
+					var endMonth = startMonth + Number(months);
+
+					if (endMonth > 12){
+						var endMonth = endMonth - 12 - 1;
+						var endYear = endYear + 1;
 					}
 
-					var startDate = new Date(Number(yearSelect), Number(monthSelect), Number(daySelect));
+					// if (Number(years) % 1 == 0.5)
+					// {
+					// 	var y = Number(years) - 0.5;
+					// 	var endYear = Number(yearSelect) + y;
+
+					// 	//Add 6 months extra
+					// 	var endMonth = Number(monthSelect) + 5;
+					// 	if (endMonth > 12)
+					// 	{
+					// 		var endMonth = endMonth - 12 - 1;
+					// 		var endYear = endYear + 1;
+					// 	}
+					// }
+					// else
+					// {
+					// 	var endYear = Number(yearSelect) + Number(years);
+					// 	var endMonth = Number(monthSelect);
+					// }
+
+					var startDate = new Date(startYear, startMonth, startDay);
 					var endDate = new Date(endYear, endMonth, endDay);
+					console.log(endDate);
 					var todayDate = new Date().getTime();
 
 					var diffCompleted = today - startDate;
 					var diffRemain = endDate - today;
 					var daysRemain = Math.floor(diffRemain / (1000 * 60 * 60 * 24));
 					var daysCompleted = Math.floor(diffCompleted / (1000 * 60 * 60 * 24));
+
 					//var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 					//var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 					//var seconds = Math.floor((diff % (1000 * 60)) / 1000);
