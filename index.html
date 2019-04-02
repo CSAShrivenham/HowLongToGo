@@ -90,6 +90,7 @@
 
 											<h1 id="dayRemainResult"></h1>
 											<h1 id="dayCompletedResult"></h1>
+											<h1 id="endDateResult"></h1>
 
 											<a id="addLeaderButton" type="button" class="button primary">Add To Leaderboard?</a>
 
@@ -785,7 +786,7 @@
 
 					document.getElementById("dayRemainResult").innerText = 'Days Remaining: ' + daysRemain.toString();
 					document.getElementById("dayCompletedResult").innerText = 'Days Completed: ' + daysCompleted.toString();
-
+					document.getElementById("endDateResult").innerText = 'End Date: ' + endDate.toDateString();
 					GoHasBeenRun = GoHasBeenRun+1;
 				}
 
