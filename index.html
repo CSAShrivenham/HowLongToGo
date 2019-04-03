@@ -421,24 +421,54 @@
 					dayData.push(days);
 				}
 
-				console.log(survivorData);
-				console.log(dayData);
+				//console.log(survivorData);
+				//console.log(dayData);
+
+				//var s = Math.ceil((dayData.length - survivorData.length) / 2);
+				// if (isOdd(dayData.length - survivorData.length) == 1){
+				// 	s = s + 1;
+				// }
+				//console.log(s);
+				var s = Math.ceil((dayData.length - survivorData.length) / 2);
+				// if (isOdd(dayData.length - survivorData.length) == 1){
+				// 	s = s + 1;
+				// }
+				//var ss = (dayData.length - survivorData.length) - s;
+				//console.log(s);
+				//console.log(ss);
 
 				var lowValues =  indexOfMin(dayData);
-				var topValues =  indexOfMax(dayData);
+				//var topValues =  indexOfMax(dayData);
 
-				for (var i = 0; i < lowValues.length; i++) {
-					var item = leaderboardData[lowValues[i]];
-					var name = item[0];
+				//console.log(lowValues.length);
 
-					addRow(name,dayData[lowValues[i]],0);
-				}
+				if (isOdd(dayData.length - survivorData.length) == 0){
+					for (var i = 0; i < s; i++) {
+						var item = leaderboardData[lowValues[i]];
+						var name = item[0];
 
-				for (var i = 0; i < topValues.length; i++) {
-					var item = leaderboardData[topValues[i]];
-					var name = item[0];
+						addRow(name,dayData[lowValues[i]],0);
+					}
+					for (var i = lowValues.length-1; i >= lowValues.length-s; i--) {
+						var item = leaderboardData[lowValues[i]];
+						var name = item[0];
 
-					addRow(name,dayData[topValues[i]],1);
+						addRow(name,dayData[lowValues[i]],1);
+					}
+				}else{
+					s = s - 1;
+					for (var i = 0; i < s; i++) {
+						var item = leaderboardData[lowValues[i]];
+						var name = item[0];
+
+						addRow(name,dayData[lowValues[i]],0);
+					}
+					for (var i = lowValues.length-1; i >= lowValues.length-s-1; i--) {
+						var item = leaderboardData[lowValues[i]];
+						var name = item[0];
+
+						addRow(name,dayData[lowValues[i]],1);
+					}
 				}
 
 				for (var i = 0; i < survivorData.length; i++) {
@@ -459,7 +489,7 @@
 
 				// Functions
 				function Add2Leaderboard(){
-					console.log(GoHasBeenRun);
+					//console.log(GoHasBeenRun);
 					if (GoHasBeenRun <= 1){
 						alert('Hit Go! before you can add your result to the leaderboard.');
 						return;
@@ -529,7 +559,14 @@
 						return -1;
 					}
 
-					var s = Math.ceil((arr.length - survivorData.length) / 2);
+					//var s = Math.ceil((arr.length - survivorData.length) / 2);
+					var s = arr.length - survivorData.length;
+					//var s = Math.ceil((arr.length - survivorData.length) / 2);
+					// if (isOdd(arr.length - survivorData.length) == 1){
+					// 	s = s - 1;
+					// }
+
+					//console.log(arr);
 
 					var max = Array(s);
 					var maxIndex = Array(s);
@@ -569,23 +606,27 @@
 						}
 					}
 
-					console.log(max);
-					console.log(maxIndex);
+					//console.log(max);
+					//console.log(maxIndex);
 					return maxIndex;
 				}
 
 
 				function indexOfMin(arr) {
+					//console.log(s);
 					if (arr.length === 0) {
 						return -1;
 					}
 
 					// var min = [1000000,1000000,1000000,1000000,1000000];
 					// var minIndex = [-1,-1,-1,-1,-1];
-					var s = Math.ceil((arr.length - survivorData.length) / 2);
-					if (isOdd(arr.length - survivorData.length) == 1){
-						s = s - 1;
-					}
+					//var s = Math.ceil((arr.length - survivorData.length) / 2);
+					//if (isOdd(arr.length - survivorData.length) == 1){
+					//	s = s - 1;
+					//}
+
+					var s = arr.length - survivorData.length;
+
 					var min = Array(s);
 					var minIndex = Array(s);
 					for (var i = 0; i < s; i++) {
@@ -623,8 +664,8 @@
 						}
 					}
 
-					console.log(min);
-					console.log(minIndex);
+					//console.log(min);
+					//console.log(minIndex);
 					return minIndex;
 				}
 
@@ -766,7 +807,7 @@
 
 					var startDate = new Date(startYear, startMonth, startDay);
 					var endDate = new Date(endYear, endMonth, endDay);
-					console.log(endDate);
+					//console.log(endDate);
 					var todayDate = new Date().getTime();
 
 					var diffCompleted = today - startDate;
