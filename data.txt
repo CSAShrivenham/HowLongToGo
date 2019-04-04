@@ -16,3 +16,4 @@ Krasin Georgiv, 1/01/2010, 3, 0
 Luke Fourtinon, 1/01/2010, 3, 0
 Samuel Westlake, 5/02/2018, 3, 0
 Ian Westerman, 31/05/2015, 6, 0
+Sebastian Wirth, 01/09/2015, 4, 0
