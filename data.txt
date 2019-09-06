@@ -8,7 +8,7 @@ Tobias Shanker, 1/01/2010, 3, 0
 Amélie Grenier, 20/02/2017, 3, 6
 Sarah Gosling, 3/09/2018, 3, 0
 Sammie Davies, 1/10/2018, 3, 0
-Hannah McGivern, 3/10/2016, 3, 0
+Hannah McGivern, 3/10/2016, 3, 3
 Teodora Polyak, 02/10/2017, 3, 6
 George Adams, 1/01/2010, 3, 0
 Ozgun Yilmaz, 1/01/2010, 3, 0
@@ -18,3 +18,4 @@ Samuel Westlake, 5/02/2018, 3, 0
 Ian Westerman, 31/05/2015, 6, 0
 Sebastian Wirth, 01/09/2015, 4, 0
 Richard Sabiers, 03/06/2019, 3, 0
+Ayden Clay, 01/10/2018, 3, 0
